@@ -31,9 +31,10 @@ RUN composer install --no-scripts --no-autoloader --prefer-dist
 # Copy application files
 COPY . .
 
-# Generate optimized autoload files (now remove dev packages)
+# Generate optimized autoload files and cache before removing dev packages
 RUN composer dump-autoload --optimize && \
-    composer install --optimize-autoloader --no-dev --no-scripts
+    composer install --optimize-autoloader --no-dev --no-scripts && \
+    php artisan package:discover --ansi
 
 # Create SQLite database
 RUN mkdir -p /var/www/database && \
