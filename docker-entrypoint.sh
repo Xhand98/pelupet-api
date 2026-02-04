@@ -4,8 +4,8 @@ set -e
 # Wait a moment for any services to be ready
 sleep 2
 
-# Clear any cached package discovery first
-php artisan package:discover --ansi || true
+# Discover packages first (this will cache properly without dev packages)
+php artisan package:discover --ansi
 
 # Run migrations
 php artisan migrate --force
